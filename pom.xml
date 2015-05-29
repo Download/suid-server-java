@@ -138,4 +138,14 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+	<scm>
+		<url>https://github.com/download/suid-server/java</url>
+	</scm>
+	<organization>
+		<name>Stijn de Witt</name>
+		<url>http://StijnDeWitt.com</url>
+	</organization>
+	<issueManagement>
+		<url>https://github.com/Download/suid-server-java/issues</url>
+	</issueManagement>
 </project>
