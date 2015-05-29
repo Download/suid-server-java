@@ -24,7 +24,7 @@ import javax.sql.DataSource;
 public class SuidService {
 	public static final int MAX_REQUEST_BLOCKS = 8;
 	
-	@Resource(lookup="java:/jdbc/SuidRWDS")
+	@Resource(name="jdbc/SuidRWDS")
 	private DataSource db;
 
 	/**

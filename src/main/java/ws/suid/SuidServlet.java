@@ -37,7 +37,7 @@ public class SuidServlet extends HttpServlet {
 	 * @see SuidService#init
 	 */
 	public void init() throws ServletException {
-		suidService.init(Integer.valueOf(getServletConfig().getInitParameter("shard")).intValue());
+		suidService.init(getInt(getServletConfig().getInitParameter("shard"), 0));
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class SuidServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setHeader("Content-Type", "application/json");
 		PrintWriter out = response.getWriter();
-		Suid[] blocks = suidService.nextBlocks(getInt(request, "blocks", 1));
+		Suid[] blocks = suidService.nextBlocks(getInt(request.getParameter("blocks"), 1));
 		out.print("[");
 		for (int i=0; i<blocks.length; i++) {
 			out.print("\"" + blocks[i] + "\"" + (i < blocks.length -1 ? ", " : ""));
@@ -55,23 +55,21 @@ public class SuidServlet extends HttpServlet {
 	}
 
 	/**
-	 * Gets the Integer parameter with the given {@code name} from the given {@code request}.
+	 * Gets the Integer parameter from the given {@code value}.
 	 * 
-	 * @param request The request to get the parameter from, never {@code null}.
-	 * @param name The name of the parameter to get, never {@code null}.
+	 * @param value The string value of the parameter to get, may be {@code null}.
 	 * @param def The default value to use if the parameter can't be found in the 
 	 * 				request, or can't be parsed to an integer.
 	 * @return The integer parameter, or {@code def} if the parameter could not be found or parsed.
 	 */
-	private int getInt(HttpServletRequest request, String name, int def) {
+	private int getInt(String value, int def) {
 		int param = def;
 		try {
-			param = Integer.parseInt(request.getParameter(name));
+			param = Integer.parseInt(value);
 		}
 		catch(NumberFormatException e) {
 			// ignore
 		}
 		return param;
 	}
-	
 }
