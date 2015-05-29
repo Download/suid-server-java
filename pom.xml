@@ -9,7 +9,29 @@
 		Suids are Service-Unique IDs that are short and sweet.
 		See http://download.github.io/suid
 	</description>
-	<url>https://github.com/download/suid-server-java</url>
+	<url>https://download.github.io/suid-server-java</url>
+	<scm>
+		<url>git@github.com:download/suid-server-java.git</url>
+		<connection>scm:git:git@github.com:download/suid-server-java.git</connection>
+		<developerConnection>scm:git:git@github.com:download/suid-server-java.git</developerConnection>
+	</scm>
+	<issueManagement>
+		<url>https://github.com/download/suid-server-java/issues</url>
+	</issueManagement>
+	<developers>
+		<developer>
+			<name>Stijn de Witt</name>
+			<email>StijnDeWitt@hotmail.com</email>
+			<organization></organization>
+			<organizationUrl>http://StijnDeWitt.com</organizationUrl>
+		</developer>
+	</developers>
+	<licenses>
+		<license>
+			<name>Creative Commons Attribution 4.0 International (CC BY 4.0)</name>
+			<url>https://creativecommons.org/licenses/by/4.0/</url>
+		</license>
+	</licenses>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -138,14 +160,4 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-	<scm>
-		<url>https://github.com/download/suid-server/java</url>
-	</scm>
-	<organization>
-		<name>Stijn de Witt</name>
-		<url>http://StijnDeWitt.com</url>
-	</organization>
-	<issueManagement>
-		<url>https://github.com/Download/suid-server-java/issues</url>
-	</issueManagement>
 </project>
