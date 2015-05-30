@@ -1,4 +1,4 @@
-# suid-server-java
+# suid-server-java v0.9.2
 Suid-server implementation for the Java EE technology stack.
 http://download.github.io/suid-server-java/
 
@@ -6,16 +6,16 @@ Suids are distributed Service-Unique IDs that are short and sweet.
 See the main [project](https://download.github.io/suid/) for details.
 
 ## Download
-* [suid-server-java-0.9.0.jar](https://github.com/Download/suid-server-java/releases/download/0.9.0/suid-server-java-0.9.0.jar)
-* [suid-server-java-0.9.0-sources.jar](https://github.com/Download/suid-server-java/releases/download/0.9.0/suid-server-java-0.9.0-sources.jar)
-* [suid-server-java-0.9.0-javadoc.jar](https://github.com/Download/suid-server-java/releases/download/0.9.0/suid-server-java-0.9.0-javadoc.jar)
+* [suid-server-java-0.9.2.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2.jar.asc))
+* [suid-server-java-0.9.2-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-sources.jar.asc))
+* [suid-server-java-0.9.2-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-javadoc.jar.asc))
 
 Maven coordinates:
 
 	<dependency>
 		<groupId>ws.suid</groupId>
 		<artifactId>suid-server-java</artifactId>
-		<version>0.9.0</version>
+		<version>0.9.2</version>
 	</dependency>
 
 ## Usage
@@ -84,7 +84,7 @@ To configure the shard id of the server, there are two options:
 
 ### Using a servlet configuration parameter
 This works by setting the servlet configuration parameter `shard` to the shard ID of the server you are configuring in your webapp's `web.xml` file. Refer to the previous section for an example. 
-*NOTE*: This option only works if the suid table is still empty.
+*NOTE*: This option only works if the suid table is still empty. If the suid table does not exist yet, it is created.
 *SEE*: [Add a servlet definition and mapping to web.xml](#add-a-servlet-definition-and-mapping-to-web-xml)
 
 ### Using the database
