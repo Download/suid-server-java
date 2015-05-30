@@ -36,7 +36,7 @@ public class SuidService {
 	 * insert the first record with the given {@code shard}. Any subsequent calls
 	 * to this method will detect that there is a record already and do nothing.</p>
 	 * 
-	 * @param shard The shard ID when used in clusters. Must be in the range {@code 0 .. 7}.
+	 * @param shard The shard ID when used in clusters. Must be in the range {@code 0 .. 3}.
 	 */
 	public void init(int shard) {
 		assert shard >= 0 && shard <= 3 : "Parameter 'shard' is out of range (0..3): " + shard + ".";
@@ -45,6 +45,15 @@ public class SuidService {
 		try {
 			con = db.getConnection();
 			stm = con.createStatement();
+			stm.execute(
+					"CREATE TABLE IF NOT EXISTS suid (\n" +
+					"	block BIGINT NOT NULL AUTO_INCREMENT,\n" +
+					"	shard TINYINT NOT NULL,\n" +
+					"	PRIMARY KEY (block),\n" +
+					"	UNIQUE KEY shard (shard)\n" +
+					")ENGINE = InnoDB;"
+			);
+			
 			ResultSet results = stm.executeQuery("SELECT block FROM suid");
 			if (! results.first()) {
 				stm.execute("INSERT INTO suid (shard) VALUES (" + shard + ");");
