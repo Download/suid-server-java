@@ -29,10 +29,9 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a id="suid-server-java" class="anchor" href="#suid-server-java" aria-hidden="true"><span class="octicon octicon-link"></span></a>suid-server-java</h1>
+<a id="suid-server-java-v092" class="anchor" href="#suid-server-java-v092" aria-hidden="true"><span class="octicon octicon-link"></span></a>suid-server-java v0.9.2</h1>
 
-<p>Suid-server implementation for the Java EE technology stack.
-<a href="http://download.github.io/suid-server-java/">http://download.github.io/suid-server-java/</a></p>
+<p>Suid-server implementation for the Java EE technology stack.</p>
 
 <p>Suids are distributed Service-Unique IDs that are short and sweet.
 See the main <a href="https://download.github.io/suid/">project</a> for details.</p>
@@ -41,7 +40,12 @@ See the main <a href="https://download.github.io/suid/">project</a> for details.
 <a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
 
 <ul>
-<li><a href="https://github.com/Download/suid-server-java/releases/download/0.9.0/suid-server-java-0.9.0.jar">suid-server-java-0.9.0.jar</a></li>
+<li>
+<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2.jar">suid-server-java-0.9.2.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2.jar.asc">signature</a>)</li>
+<li>
+<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-sources.jar">suid-server-java-0.9.2-sources.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-sources.jar.asc">signature</a>)</li>
+<li>
+<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-javadoc.jar">suid-server-java-0.9.2-javadoc.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-javadoc.jar.asc">signature</a>)</li>
 </ul>
 
 <p>Maven coordinates:</p>
@@ -49,7 +53,7 @@ See the main <a href="https://download.github.io/suid/">project</a> for details.
 <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;ws.suid&lt;/groupId&gt;
     &lt;artifactId&gt;suid-server-java&lt;/artifactId&gt;
-    &lt;version&gt;0.9.0&lt;/version&gt;
+    &lt;version&gt;0.9.2&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
 
@@ -145,7 +149,7 @@ This allows you to set up separate servers with their own databases to give out 
 <a id="using-a-servlet-configuration-parameter" class="anchor" href="#using-a-servlet-configuration-parameter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using a servlet configuration parameter</h3>
 
 <p>This works by setting the servlet configuration parameter <code>shard</code> to the shard ID of the server you are configuring in your webapp's <code>web.xml</code> file. Refer to the previous section for an example. 
-<em>NOTE</em>: This option only works if the suid table is still empty.
+<em>NOTE</em>: This option only works if the suid table is still empty. If the suid table does not exist yet, it is created.
 <em>SEE</em>: <a href="#add-a-servlet-definition-and-mapping-to-web-xml">Add a servlet definition and mapping to web.xml</a></p>
 
 <h3>
