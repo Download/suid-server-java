@@ -260,6 +260,15 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 	}
 
 	/**
+	 * Converts this Suid to a Java Long.
+	 * 
+	 * @return This suid's value converted to a Long, never {@code null}.
+	 */
+	public Long toLong() {
+		return Long.valueOf(value);
+	}
+	
+	/**
 	 * Gets the block number.
 	 * 
 	 * @return A long with just the block number.

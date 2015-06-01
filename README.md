@@ -1,21 +1,21 @@
-# suid-server-java v0.9.2
-Suid-server implementation for the Java EE technology stack.
+# suid-server-java v0.9.3
+Suid-server implementation for the Java EE technology stack.<br>
 http://download.github.io/suid-server-java/
 
-Suids are distributed Service-Unique IDs that are short and sweet.
+Suids are distributed Service-Unique IDs that are short and sweet.<br>
 See the main [project](https://download.github.io/suid/) for details.
 
 ## Download
-* [suid-server-java-0.9.2.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2.jar.asc))
-* [suid-server-java-0.9.2-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-sources.jar.asc))
-* [suid-server-java-0.9.2-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-javadoc.jar.asc))
+* [suid-server-java-0.9.3.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3.jar.asc))
+* [suid-server-java-0.9.3-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-sources.jar.asc))
+* [suid-server-java-0.9.3-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-javadoc.jar.asc))
 
 Maven coordinates:
 
 	<dependency>
 		<groupId>ws.suid</groupId>
 		<artifactId>suid-server-java</artifactId>
-		<version>0.9.2</version>
+		<version>0.9.3</version>
 	</dependency>
 
 ## Usage
@@ -42,7 +42,7 @@ Maven coordinates:
 
 ### Insert the first record in the new table
 	INSERT INTO suid(shard) VALUES(0);
-*Note*: This configures the shard ID as 0. 
+*Note*: This configures the shard ID as 0.<br> 
 *See*: [Sharding](#sharding) [Using the database](#using-the-database)
 
 ### Configure a MySQL datasource
@@ -83,12 +83,12 @@ To configure the shard id of the server, there are two options:
 2. [Using the database](#using-the-database)
 
 ### Using a servlet configuration parameter
-This works by setting the servlet configuration parameter `shard` to the shard ID of the server you are configuring in your webapp's `web.xml` file. Refer to the previous section for an example. 
-*NOTE*: This option only works if the suid table is still empty. If the suid table does not exist yet, it is created.
+This works by setting the servlet configuration parameter `shard` to the shard ID of the server you are configuring in your webapp's `web.xml` file. Refer to the previous section for an example. <br>
+*NOTE*: This option only works if the suid table is still empty. If the suid table does not exist yet, it is created. <br>
 *SEE*: [Add a servlet definition and mapping to web.xml](#add-a-servlet-definition-and-mapping-to-web-xml)
 
 ### Using the database
-The preferred way of configuring the shard ID is by just inserting the first record in the suid table manually. The shard id is used when inserting new records so once the first record is there the server can figure out the rest by itself. All the servlet configuration parameter does is tell the SuidServlet to insert this first record if it's not yet there.
+The preferred way of configuring the shard ID is by just inserting the first record in the suid table manually. The shard id is used when inserting new records so once the first record is there the server can figure out the rest by itself. All the servlet configuration parameter does is tell the SuidServlet to insert this first record if it's not yet there.<br>
 *SEE*: [Insert the first record in the new table](#insert-the-first-record-in-the-new-table)
 
 ## Copyright
