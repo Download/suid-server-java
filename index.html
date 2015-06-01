@@ -29,11 +29,12 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a id="suid-server-java-v092" class="anchor" href="#suid-server-java-v092" aria-hidden="true"><span class="octicon octicon-link"></span></a>suid-server-java v0.9.2</h1>
+<a id="suid-server-java-v093" class="anchor" href="#suid-server-java-v093" aria-hidden="true"><span class="octicon octicon-link"></span></a>suid-server-java v0.9.3</h1>
 
-<p>Suid-server implementation for the Java EE technology stack.</p>
+<p>Suid-server implementation for the Java EE technology stack.<br>
+<a href="http://download.github.io/suid-server-java/">http://download.github.io/suid-server-java/</a></p>
 
-<p>Suids are distributed Service-Unique IDs that are short and sweet.
+<p>Suids are distributed Service-Unique IDs that are short and sweet.<br>
 See the main <a href="https://download.github.io/suid/">project</a> for details.</p>
 
 <h2>
@@ -41,11 +42,11 @@ See the main <a href="https://download.github.io/suid/">project</a> for details.
 
 <ul>
 <li>
-<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2.jar">suid-server-java-0.9.2.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2.jar.asc">signature</a>)</li>
+<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3.jar">suid-server-java-0.9.3.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3.jar.asc">signature</a>)</li>
 <li>
-<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-sources.jar">suid-server-java-0.9.2-sources.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-sources.jar.asc">signature</a>)</li>
+<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-sources.jar">suid-server-java-0.9.3-sources.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-sources.jar.asc">signature</a>)</li>
 <li>
-<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-javadoc.jar">suid-server-java-0.9.2-javadoc.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.2/suid-server-java-0.9.2-javadoc.jar.asc">signature</a>)</li>
+<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-javadoc.jar">suid-server-java-0.9.3-javadoc.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-javadoc.jar.asc">signature</a>)</li>
 </ul>
 
 <p>Maven coordinates:</p>
@@ -53,7 +54,7 @@ See the main <a href="https://download.github.io/suid/">project</a> for details.
 <pre><code>&lt;dependency&gt;
     &lt;groupId&gt;ws.suid&lt;/groupId&gt;
     &lt;artifactId&gt;suid-server-java&lt;/artifactId&gt;
-    &lt;version&gt;0.9.2&lt;/version&gt;
+    &lt;version&gt;0.9.3&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
 
@@ -96,7 +97,7 @@ GRANT ALL PRIVILEGES ON `suiddb`.* TO 'username'@'hostname';
 <pre><code>INSERT INTO suid(shard) VALUES(0);
 </code></pre>
 
-<p><em>Note</em>: This configures the shard ID as 0. 
+<p><em>Note</em>: This configures the shard ID as 0.<br> 
 <em>See</em>: <a href="#sharding">Sharding</a> <a href="#using-the-database">Using the database</a></p>
 
 <h3>
@@ -148,14 +149,14 @@ This allows you to set up separate servers with their own databases to give out 
 <h3>
 <a id="using-a-servlet-configuration-parameter" class="anchor" href="#using-a-servlet-configuration-parameter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using a servlet configuration parameter</h3>
 
-<p>This works by setting the servlet configuration parameter <code>shard</code> to the shard ID of the server you are configuring in your webapp's <code>web.xml</code> file. Refer to the previous section for an example. 
-<em>NOTE</em>: This option only works if the suid table is still empty. If the suid table does not exist yet, it is created.
+<p>This works by setting the servlet configuration parameter <code>shard</code> to the shard ID of the server you are configuring in your webapp's <code>web.xml</code> file. Refer to the previous section for an example. <br>
+<em>NOTE</em>: This option only works if the suid table is still empty. If the suid table does not exist yet, it is created. <br>
 <em>SEE</em>: <a href="#add-a-servlet-definition-and-mapping-to-web-xml">Add a servlet definition and mapping to web.xml</a></p>
 
 <h3>
 <a id="using-the-database" class="anchor" href="#using-the-database" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using the database</h3>
 
-<p>The preferred way of configuring the shard ID is by just inserting the first record in the suid table manually. The shard id is used when inserting new records so once the first record is there the server can figure out the rest by itself. All the servlet configuration parameter does is tell the SuidServlet to insert this first record if it's not yet there.
+<p>The preferred way of configuring the shard ID is by just inserting the first record in the suid table manually. The shard id is used when inserting new records so once the first record is there the server can figure out the rest by itself. All the servlet configuration parameter does is tell the SuidServlet to insert this first record if it's not yet there.<br>
 <em>SEE</em>: <a href="#insert-the-first-record-in-the-new-table">Insert the first record in the new table</a></p>
 
 <h2>
