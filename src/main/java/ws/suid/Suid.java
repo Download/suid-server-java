@@ -1,5 +1,19 @@
 package ws.suid;
 
+import java.io.IOException;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+
 /**
  * Stores a 53-bit service-unique ID in a 64-bit long.
  * 
@@ -52,9 +66,37 @@ package ws.suid;
  *  
  * @author Stijn de Witt [StijnDeWitt@hotmail.com]
  */
+@JsonFormat(shape=JsonFormat.Shape.STRING)
+@JsonDeserialize(using=Suid.Deserializer.class)
+@JsonSerialize(using=Suid.Serializer.class)
 public final class Suid extends Number implements CharSequence, Comparable<Suid> {
 	private static final long serialVersionUID = 1L;
 
+	/** Convenient constant for a Suid with a value of {@code 0L}. */
+	public static final Suid NULL = Suid.valueOf(0L);
+	
+	/** Prefix used when serializing to/from JSON. */
+	public static final String PREFIX = "Suid:";
+	/** Serializes to JSON */
+	public static final class Serializer extends StdSerializer<Suid> {
+		public Serializer(){
+			super(Suid.class);
+		}
+		@Override public void serialize(Suid value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonGenerationException {
+			jgen.writeString(value.toJSON());
+		}
+	}
+	/** Deserializes from JSON */
+	public static final class Deserializer extends StdDeserializer<Suid> {
+		public Deserializer() {
+			super(Suid.class);
+		}
+		@Override public Suid deserialize(JsonParser parser, DeserializationContext ctx) throws IOException, JsonProcessingException {
+			return Suid.valueOfJSON(parser.getValueAsString());
+		}
+		
+	}
+	
 	/** Mask that singles out the reserved bits */
 	public static final long MASK_RESERVED =  0xffe0000000000000L;
 	/** Mask that singles out the block bits */
@@ -84,9 +126,18 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 	public static final String ALPHABET = "0123456789acdefghijkmnprstuvwxyz";
 	/** Replacement symbols used when converting suid to string */
 	public static final String[][] REPLACEMENT_SYMBOLS = {{"b", "00"},{"l", "01"},{"o", "02"},{"q", "03"}};
+	/** Chars that are legal to use in a suid string (Alphabet + replacement symbols). */
+	public static final String LEGAL_CHARS = ALPHABET + "bloq";
 
 	private long value;
 	private transient String strVal; // cache, should not be serialized
+
+	/**
+	 * Protected constructor needed by Jackson.
+	 */
+	protected Suid(String value) {
+		this(value == null ? 0L : Suid.valueOf(value.startsWith(PREFIX) ? value.substring(PREFIX.length()) : value).longValue());
+	}
 
 	/**
 	 * Private constructor to signal to the JVM that this is a value class.
@@ -114,7 +165,7 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 	 * @return A new suid, never {@code null}.
 	 */
 	public static Suid valueOf(long value) {
-		return new Suid(value);
+		return value == 0L && NULL != null ? NULL : new Suid(value);
 	}
 
 	/**
@@ -161,7 +212,7 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 	public static Suid valueOfBase32(String base32) {
 		if (base32 == null) return null;
 		long value = 0;
-		for (int i=base32.length()-1; i>=0; i--) {
+		for (int i=0; i<base32.length(); i++) {
 			int idx = ALPHABET.indexOf(base32.charAt(i));
 			if (idx == -1) throw new IllegalArgumentException("Unable to parse input to a SUID: " + base32);
 			value = value * ALPHABET.length() + idx;
@@ -345,5 +396,92 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 
 	@Override public int compareTo(Suid obj) {
 		return Long.compare(value, obj.value);
+	}
+
+	/**
+	 * Serializes this suid to JSON.
+	 * 
+	 * <p>This method returns a JSON string of the form {@code "Suid:xxxxx"} where 
+	 * {@code xxxxx} is the suid's string representation. E.G: {@code "Suid:14shd"}.</p>
+	 * 
+	 * @return The JSON string, never {@code null}.
+	 * 
+	 * @see #PREFIX
+	 * @see #valueOfJSON(String)
+	 * @see Serializer
+	 * @see Deserializer
+	 */
+	public String toJSON() {
+		return PREFIX + toString();
+	}
+
+	/**
+	 * Indicates whether the given {@code value} looks like a valid suid string.
+	 * 
+	 * <p>If this method returns {@code true}, this only indicates that it *might*
+	 * be valid. There are no guarantees.</p>
+	 * 
+	 * @param value The value, may be {@code null}, in which case this method returns {@code false}.
+	 * @return {@code true} if it looks valid, {@code false} otherwise.
+	 * 
+	 * @see #valueOf(String)
+	 */
+	public static boolean looksValid(String value) {
+		if (value == null) {
+			return false;
+		}
+		int len = value.length();
+		if ((len == 0) || (len > 11)) {
+			return false;
+		}
+		if ((len == 11) && (ALPHABET.indexOf(value.charAt(0)) > 8)) {
+			return false;
+		}
+		for (int i=0; i<len; i++) {
+			if (LEGAL_CHARS.indexOf(value.charAt(i)) == -1) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Indicates whether the given {@code json} string looks like a valid JSON representation of a suid.
+	 * 
+	 * <p>If this method returns {@code true}, this only indicates that the JSON *might* be valid as a suid. 
+	 * There are no guarantees.</p>
+	 * 
+	 * @param json The json string, may be {@code null} in which case this method returns {@code false}.
+	 * @return The suid, or {@code null}.
+	 * 
+	 * @see #looksValid
+	 */
+	public static boolean looksValidJSON(String json) {
+		if ((json == null) || (json.length() == 0)) {
+			return false;
+		}
+		if (! json.startsWith(PREFIX)) {
+			return false;
+		}
+		return Suid.looksValid(json.substring(PREFIX.length()));
+	}
+
+	/**
+	 * Deserializes the given JSON string into a suid, if possible.
+	 * 
+	 * <p>This method checks whether the given {@code json} string
+	 * looks valid. If it does, it's deserialized into a suid and returned.
+	 * If it does not look valid, {@code null} is returned instead.</p>
+	 * 
+	 * @return A suid, or {@code null}.
+	 * 
+	 * @see #looksValidJSON(String)
+	 * @see #toJSON(String)
+	 * @see #PREFIX
+	 * @see Deserializer
+	 */
+	public static Suid valueOfJSON(String json) {
+		if (! Suid.looksValidJSON(json)) return null;
+		return valueOf(json.substring(PREFIX.length()));
 	}
 }

@@ -1,4 +1,4 @@
-# suid-server-java v0.9.3
+# suid-server-java v0.9.4
 Suid-server implementation for the Java EE technology stack.<br>
 http://download.github.io/suid-server-java/
 
@@ -6,17 +6,18 @@ Suids are distributed Service-Unique IDs that are short and sweet.<br>
 See the main [project](https://download.github.io/suid/) for details.
 
 ## Download
-* [suid-server-java-0.9.3.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3.jar.asc))
-* [suid-server-java-0.9.3-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-sources.jar.asc))
-* [suid-server-java-0.9.3-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.3/suid-server-java-0.9.3-javadoc.jar.asc))
+* [suid-server-java-0.9.4.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4.jar.asc))
+* [suid-server-java-0.9.4-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4-sources.jar.asc))
+* [suid-server-java-0.9.4-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4-javadoc.jar.asc))
 
 Maven coordinates:
-
-	<dependency>
-		<groupId>ws.suid</groupId>
-		<artifactId>suid-server-java</artifactId>
-		<version>0.9.3</version>
-	</dependency>
+```xml
+<dependency>
+	<groupId>ws.suid</groupId>
+	<artifactId>suid-server-java</artifactId>
+	<version>0.9.4</version>
+</dependency>
+```
 
 ## Usage
 * [Create a MySQL database and user](#create-a-mysql-database-and-user)
@@ -27,21 +28,27 @@ Maven coordinates:
 * [Add a servlet definition and mapping to web.xml](#add-a-servlet-definition-and-mapping-to-web-xml)
 
 ### Create a MySQL database and user
-	CREATE SCHEMA IF NOT EXISTS `suiddb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-	CREATE USER 'username'@'hostname' IDENTIFIED BY 'password';
-	GRANT ALL PRIVILEGES ON `suiddb`.* TO 'username'@'hostname';
+```sql
+CREATE SCHEMA IF NOT EXISTS `suiddb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'username'@'hostname' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON `suiddb`.* TO 'username'@'hostname';
+```
 *NOTE*: Only MySQL is supported at the moment.
 
 ### Create the suid table
-	CREATE TABLE IF NOT EXISTS suid (
-		block BIGINT NOT NULL AUTO_INCREMENT,
-		shard TINYINT NOT NULL,
-		PRIMARY KEY (block),
-		UNIQUE KEY shard (shard)
-	);
+```sql
+CREATE TABLE IF NOT EXISTS suid (
+	block BIGINT NOT NULL AUTO_INCREMENT,
+	shard TINYINT NOT NULL,
+	PRIMARY KEY (block),
+	UNIQUE KEY shard (shard)
+);
+```
 
 ### Insert the first record in the new table
-	INSERT INTO suid(shard) VALUES(0);
+```sql
+INSERT INTO suid(shard) VALUES(0);
+```
 *Note*: This configures the shard ID as 0.<br> 
 *See*: [Sharding](#sharding) [Using the database](#using-the-database)
 
@@ -54,25 +61,27 @@ For example, using JBoss CLI it could look like this:
 Download or build the jar and add it to your web application's `WEB-INF/lib` folder.
 
 ### Add a servlet definition and mapping to web.xml
-	<servlet>
-		<description></description>
-		<display-name>SuidServlet</display-name>
-		<servlet-name>SuidServlet</servlet-name>
-		<servlet-class>ws.suid.SuidServlet</servlet-class>
-		<init-param>
-			<description>
-				Shard number to use when no shard number is in the `suid` table yet. Will
-				be ignored if there is already a record in the suid table. When supplied it
-				should be in the range from 0 .. 3.
-			</description>
-			<param-name>shard</param-name>
-			<param-value>0</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>SuidServlet</servlet-name>
-		<url-pattern>/suid/suid.json</url-pattern>
-	</servlet-mapping>
+```xml
+<servlet>
+	<description></description>
+	<display-name>SuidServlet</display-name>
+	<servlet-name>SuidServlet</servlet-name>
+	<servlet-class>ws.suid.SuidServlet</servlet-class>
+	<init-param>
+		<description>
+			Shard number to use when no shard number is in the `suid` table yet. Will
+			be ignored if there is already a record in the suid table. When supplied it
+			should be in the range from 0 .. 3.
+		</description>
+		<param-name>shard</param-name>
+		<param-value>0</param-value>
+	</init-param>
+</servlet>
+<servlet-mapping>
+	<servlet-name>SuidServlet</servlet-name>
+	<url-pattern>/suid/suid.json</url-pattern>
+</servlet-mapping>
+```
 
 ## Sharding
 To prevent a single point of failure, the total ID space for each domain is divided into 4 sections (called shards). 
