@@ -73,7 +73,7 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 	private static final long serialVersionUID = 1L;
 
 	/** Convenient constant for a Suid with a value of {@code 0L}. */
-	public static final Suid NULL = Suid.valueOf(0L);
+	public static final Suid NULL = new Suid(0L);
 	
 	/** Prefix used when serializing to/from JSON. */
 	public static final String PREFIX = "Suid:";
@@ -133,7 +133,11 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 	private transient String strVal; // cache, should not be serialized
 
 	/**
-	 * Protected constructor needed by Jackson.
+	 * Constructor needed by Jackson. Protected to signal to the JVM that this is a value class.
+	 * 
+	 * <p>Use the static {@code valueOf} methods to instantiate a suid.</p>
+	 * 
+	 * @param value The value of the new suid as a (possibly JSON) string, or {@code null}. 
 	 */
 	protected Suid(String value) {
 		this(value == null ? 0L : Suid.valueOf(value.startsWith(PREFIX) ? value.substring(PREFIX.length()) : value).longValue());
@@ -165,7 +169,7 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 	 * @return A new suid, never {@code null}.
 	 */
 	public static Suid valueOf(long value) {
-		return value == 0L && NULL != null ? NULL : new Suid(value);
+		return value == NULL.longValue() ? NULL : new Suid(value);
 	}
 
 	/**
@@ -476,7 +480,7 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 	 * @return A suid, or {@code null}.
 	 * 
 	 * @see #looksValidJSON(String)
-	 * @see #toJSON(String)
+	 * @see #toJSON
 	 * @see #PREFIX
 	 * @see Deserializer
 	 */
