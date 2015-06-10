@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ws.suid</groupId>
 	<artifactId>suid-server-java</artifactId>
-	<version>0.9.4</version>
+	<version>0.9.9</version>
 	<name>suid-server-java</name>
 	<description>Suid-server implementation for the Java EE technology stack.
 https://download.github.io.suid-server-java
@@ -10,7 +10,7 @@ https://download.github.io.suid-server-java
 Suids are distributed Service-Unique IDs that are short and sweet.
 https://download.github.io.suid-server-java
 		
-ws.suid:suid-server-java:0.9.3</description>
+ws.suid:suid-server-java:0.9.9</description>
 	<url>https://download.github.io/suid-server-java</url>
 	<scm>
 		<url>git@github.com:download/suid-server-java.git</url>

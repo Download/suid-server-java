@@ -1,4 +1,4 @@
-# suid-server-java v0.9.4
+# suid-server-java v0.9.9
 Suid-server implementation for the Java EE technology stack.<br>
 http://download.github.io/suid-server-java/
 
@@ -6,16 +6,16 @@ Suids are distributed Service-Unique IDs that are short and sweet.<br>
 See the main [project](https://download.github.io/suid/) for details.
 
 ## Download
-* [suid-server-java-0.9.4.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4.jar.asc))
-* [suid-server-java-0.9.4-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4-sources.jar.asc))
-* [suid-server-java-0.9.4-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.4/suid-server-java-0.9.4-javadoc.jar.asc))
+* [suid-server-java-0.9.9.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.9/suid-server-java-0.9.9.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.9/suid-server-java-0.9.9.jar.asc))
+* [suid-server-java-0.9.9-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.9/suid-server-java-0.9.9-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.9/suid-server-java-0.9.9-sources.jar.asc))
+* [suid-server-java-0.9.9-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.9/suid-server-java-0.9.9-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.9/suid-server-java-0.9.9-javadoc.jar.asc))
 
 Maven coordinates:
 ```xml
 <dependency>
 	<groupId>ws.suid</groupId>
 	<artifactId>suid-server-java</artifactId>
-	<version>0.9.4</version>
+	<version>0.9.9</version>
 </dependency>
 ```
 
