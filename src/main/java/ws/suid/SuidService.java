@@ -20,8 +20,31 @@ import javax.sql.DataSource;
  * 
  * @author Stijn de Witt [StijnDeWitt@hotmail.com]
  */
-@Stateless @LocalBean
+@Stateless
+@LocalBean
 public class SuidService {
+	public static final class Generator {
+		private Suid block;
+		private int id;
+		public Generator() {}
+		public Suid next(SuidService suidService) {
+			if (id >= Suid.IDSIZE) {
+				id = 0;
+				block = null;
+			}
+			if (block == null) {
+				block = suidService.nextBlocks(1)[0]; 
+			}
+			return Suid.valueOf(block.getBlock(), id++, block.getShard());
+		}
+	}
+	
+	private static final ThreadLocal<Generator> GENERATOR = new ThreadLocal<Generator>() {
+		protected Generator initialValue() {
+			return new Generator();
+		};
+	};
+	
 	public static final int MAX_REQUEST_BLOCKS = 8;
 	
 	@Resource(name="jdbc/SuidRWDS")
@@ -96,6 +119,10 @@ public class SuidService {
 		finally {
 			release(con, stm);
 		}
+	}
+	
+	public Suid next() {
+		return GENERATOR.get().next(this);
 	}
 	
 	private Suid nextBlock(Statement stm) throws SQLException {
