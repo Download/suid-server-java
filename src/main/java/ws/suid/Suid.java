@@ -1,6 +1,11 @@
 package ws.suid;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -49,6 +54,16 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 @JsonSerialize(using=Suid.Serializer.class)
 public final class Suid extends Number implements CharSequence, Comparable<Suid> {
 	private static final long serialVersionUID = 1L;
+	
+	@Converter(autoApply=true)
+	public static class SuidConverter implements AttributeConverter<Suid, Long> {
+		@Override public Long convertToDatabaseColumn(Suid suid) {
+			return suid == null ? null : suid.toLong();
+		}
+		@Override public Suid convertToEntityAttribute(Long suid) {
+			return suid == null ? null : Suid.valueOf(suid);
+		}
+	}
 	
 	/** Convenient constant for a Suid with a value of {@code 0L}. */
 	public static final Suid NULL = new Suid(0L);
@@ -359,5 +374,11 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 	public static Suid valueOfJSON(String json) {
 		if (! Suid.looksValidJSON(json)) return null;
 		return valueOf(json.substring(PREFIX.length()));
+	}
+	
+	public static List<Long> toLong(List<Suid> ids) {
+		List<Long> results = new ArrayList<Long>();
+		for (Suid id : ids) {results.add(id.toLong());}
+		return results;
 	}
 }
