@@ -382,7 +382,7 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 		return results;
 	}
 	
-	public static List<Suid> valueOfLong(List<Long> ids) {
+	public static List<Suid> valueOf(List<Long> ids) {
 		List<Suid> results = new ArrayList<Suid>();
 		for (Long id : ids) {results.add(Suid.valueOf(id.longValue()));}
 		return results;
