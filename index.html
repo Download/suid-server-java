@@ -29,7 +29,7 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a id="suid-server-java-v0914" class="anchor" href="#suid-server-java-v0914" aria-hidden="true"><span class="octicon octicon-link"></span></a>suid-server-java v0.9.14</h1>
+<a id="suid-server-java-v0915" class="anchor" href="#suid-server-java-v0915" aria-hidden="true"><span class="octicon octicon-link"></span></a>suid-server-java v0.9.15</h1>
 
 <p>Suid-server implementation for the Java EE technology stack.<br></p>
 
@@ -41,20 +41,20 @@ See the main <a href="https://download.github.io/suid/">project</a> for details.
 
 <ul>
 <li>
-<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14.jar">suid-server-java-0.9.14.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14.jar.asc">signature</a>)</li>
+<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15.jar">suid-server-java-0.9.15.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15.jar.asc">signature</a>)</li>
 <li>
-<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14-sources.jar">suid-server-java-0.9.14-sources.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14-sources.jar.asc">signature</a>)</li>
+<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15-sources.jar">suid-server-java-0.9.15-sources.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15-sources.jar.asc">signature</a>)</li>
 <li>
-<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14-javadoc.jar">suid-server-java-0.9.14-javadoc.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14-javadoc.jar.asc">signature</a>)</li>
+<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15-javadoc.jar">suid-server-java-0.9.15-javadoc.jar</a> (<a href="http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15-javadoc.jar.asc">signature</a>)</li>
 </ul>
 
 <h2>
 <a id="maven-coordinates" class="anchor" href="#maven-coordinates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Maven coordinates:</h2>
 
-<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
     &lt;<span class="pl-ent">groupId</span>&gt;ws.suid&lt;/<span class="pl-ent">groupId</span>&gt;
     &lt;<span class="pl-ent">artifactId</span>&gt;suid-server-java&lt;/<span class="pl-ent">artifactId</span>&gt;
-    &lt;<span class="pl-ent">version</span>&gt;0.9.14&lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;0.9.15&lt;/<span class="pl-ent">version</span>&gt;
 &lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
 
 <h2>
@@ -72,7 +72,7 @@ See the main <a href="https://download.github.io/suid/">project</a> for details.
 <h3>
 <a id="create-a-mysql-database-and-user" class="anchor" href="#create-a-mysql-database-and-user" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a MySQL database and user</h3>
 
-<div class="highlight highlight-sql"><pre><span class="pl-k">CREATE</span> <span class="pl-k">SCHEMA</span> <span class="pl-en">IF</span> NOT EXISTS <span class="pl-s"><span class="pl-pds">`</span>suiddb<span class="pl-pds">`</span></span> DEFAULT CHARACTER <span class="pl-k">SET</span> utf8mb4 COLLATE utf8mb4_unicode_ci;
+<div class="highlight highlight-source-sql"><pre><span class="pl-k">CREATE</span> <span class="pl-k">SCHEMA</span> <span class="pl-en">IF</span> NOT EXISTS <span class="pl-s"><span class="pl-pds">`</span>suiddb<span class="pl-pds">`</span></span> DEFAULT CHARACTER <span class="pl-k">SET</span> utf8mb4 COLLATE utf8mb4_unicode_ci;
 <span class="pl-k">CREATE</span> <span class="pl-k">USER</span> '<span class="pl-en">username</span>'@<span class="pl-s"><span class="pl-pds">'</span>hostname<span class="pl-pds">'</span></span> IDENTIFIED BY <span class="pl-s"><span class="pl-pds">'</span>password<span class="pl-pds">'</span></span>;
 <span class="pl-k">GRANT</span> ALL PRIVILEGES <span class="pl-k">ON</span> <span class="pl-s"><span class="pl-pds">`</span>suiddb<span class="pl-pds">`</span></span>.<span class="pl-k">*</span> TO <span class="pl-s"><span class="pl-pds">'</span>username<span class="pl-pds">'</span></span>@<span class="pl-s"><span class="pl-pds">'</span>hostname<span class="pl-pds">'</span></span>;</pre></div>
 
@@ -81,7 +81,7 @@ See the main <a href="https://download.github.io/suid/">project</a> for details.
 <h3>
 <a id="create-the-suid-table" class="anchor" href="#create-the-suid-table" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create the suid table</h3>
 
-<div class="highlight highlight-sql"><pre><span class="pl-k">CREATE</span> <span class="pl-k">TABLE</span> <span class="pl-en">IF</span> NOT EXISTS suid (
+<div class="highlight highlight-source-sql"><pre><span class="pl-k">CREATE</span> <span class="pl-k">TABLE</span> <span class="pl-en">IF</span> NOT EXISTS suid (
     block <span class="pl-k">BIGINT</span> <span class="pl-k">NOT NULL</span> AUTO_INCREMENT,
     shard TINYINT <span class="pl-k">NOT NULL</span>,
     <span class="pl-k">PRIMARY KEY</span> (block),
@@ -91,7 +91,7 @@ See the main <a href="https://download.github.io/suid/">project</a> for details.
 <h3>
 <a id="insert-the-first-record-in-the-new-table" class="anchor" href="#insert-the-first-record-in-the-new-table" aria-hidden="true"><span class="octicon octicon-link"></span></a>Insert the first record in the new table</h3>
 
-<div class="highlight highlight-sql"><pre><span class="pl-k">INSERT INTO</span> suid(shard) <span class="pl-k">VALUES</span>(<span class="pl-c1">0</span>);</pre></div>
+<div class="highlight highlight-source-sql"><pre><span class="pl-k">INSERT INTO</span> suid(shard) <span class="pl-k">VALUES</span>(<span class="pl-c1">0</span>);</pre></div>
 
 <p><em>Note</em>: This configures the shard ID as 0.<br> 
 <em>See</em>: <a href="#sharding">Sharding</a> <a href="#using-the-database">Using the database</a></p>
@@ -111,7 +111,7 @@ For example, using JBoss CLI it could look like this:
 <h3>
 <a id="add-a-servlet-definition-and-mapping-to-webxml" class="anchor" href="#add-a-servlet-definition-and-mapping-to-webxml" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add a servlet definition and mapping to web.xml</h3>
 
-<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">servlet</span>&gt;
+<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">servlet</span>&gt;
     &lt;<span class="pl-ent">description</span>&gt;&lt;/<span class="pl-ent">description</span>&gt;
     &lt;<span class="pl-ent">display-name</span>&gt;SuidServlet&lt;/<span class="pl-ent">display-name</span>&gt;
     &lt;<span class="pl-ent">servlet-name</span>&gt;SuidServlet&lt;/<span class="pl-ent">servlet-name</span>&gt;
