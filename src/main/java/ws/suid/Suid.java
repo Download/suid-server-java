@@ -364,6 +364,9 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 	 * looks valid. If it does, it's deserialized into a suid and returned.
 	 * If it does not look valid, {@code null} is returned instead.</p>
 	 * 
+	 * @param json The JSON string to deserialize from, may be {@code null}, 
+	 *             in which case this method returns {@code null}.
+	 * 
 	 * @return A suid, or {@code null}.
 	 * 
 	 * @see #looksValidJSON(String)
@@ -375,13 +378,25 @@ public final class Suid extends Number implements CharSequence, Comparable<Suid>
 		if (! Suid.looksValidJSON(json)) return null;
 		return valueOf(json.substring(PREFIX.length()));
 	}
-	
+
+	/**
+	 * Converts the given list of {@code ids} to a list of longs.
+	 * 
+	 * @param ids The ids to convert, may be empty but not {@code null}.
+	 * @return The list of longs, may be empty but never {@code null}.
+	 */
 	public static List<Long> toLong(List<Suid> ids) {
 		List<Long> results = new ArrayList<Long>();
 		for (Suid id : ids) {results.add(id.toLong());}
 		return results;
 	}
 	
+	/**
+	 * Converts the given list of {@code ids} to a list of Suids.
+	 * 
+	 * @param ids The ids to convert, may be empty but not {@code null}.
+	 * @return The list of Suids, may be empty but never {@code null}.
+	 */
 	public static List<Suid> valueOf(List<Long> ids) {
 		List<Suid> results = new ArrayList<Suid>();
 		for (Long id : ids) {results.add(Suid.valueOf(id.longValue()));}

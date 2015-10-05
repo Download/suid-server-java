@@ -29,18 +29,6 @@ public class SuidServlet extends HttpServlet {
 	}
 
 	/**
-	 * Initializes this servlet and the associated {@code SuidService}.
-	 * 
-	 * <p>This method reads the parameter {@code shard} from the servlet configuration and then 
-	 * invokes {@code SuidService#init} with it.</p>
-	 * 
-	 * @see SuidService#init
-	 */
-	public void init() throws ServletException {
-//		suidService.init(getInt(getServletConfig().getInitParameter("shard"), 0));
-	}
-
-	/**
 	 * Handles incoming GET requests.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
