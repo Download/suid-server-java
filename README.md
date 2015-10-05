@@ -1,4 +1,4 @@
-# suid-server-java v0.9.14
+# suid-server-java v0.9.15
 Suid-server implementation for the Java EE technology stack.<br>
 http://download.github.io/suid-server-java/
 
@@ -6,16 +6,16 @@ Suids are distributed Service-Unique IDs that are short and sweet.<br>
 See the main [project](https://download.github.io/suid/) for details.
 
 ## Download
-* [suid-server-java-0.9.14.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14.jar.asc))
-* [suid-server-java-0.9.14-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14-sources.jar.asc))
-* [suid-server-java-0.9.14-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.14/suid-server-java-0.9.14-javadoc.jar.asc))
+* [suid-server-java-0.9.15.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15.jar.asc))
+* [suid-server-java-0.9.15-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15-sources.jar.asc))
+* [suid-server-java-0.9.15-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.15/suid-server-java-0.9.15-javadoc.jar.asc))
 
 ## Maven coordinates:
 ```xml
 <dependency>
 	<groupId>ws.suid</groupId>
 	<artifactId>suid-server-java</artifactId>
-	<version>0.9.14</version>
+	<version>0.9.15</version>
 </dependency>
 ```
 ## Usage
