@@ -37,7 +37,7 @@ public class SuidServlet extends HttpServlet {
 	 * @see SuidService#init
 	 */
 	public void init() throws ServletException {
-		suidService.init(getInt(getServletConfig().getInitParameter("shard"), 0));
+//		suidService.init(getInt(getServletConfig().getInitParameter("shard"), 0));
 	}
 
 	/**
