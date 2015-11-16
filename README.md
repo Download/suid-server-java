@@ -19,15 +19,15 @@ See the main [project](https://download.github.io/suid/) for details.
 </dependency>
 ```
 ## Usage
-* [Create a MySQL database and user](#create-a-mysql-database-and-user)
+* [Create a database and user](#create-a-database-and-user)
 * [Create the suid table](#create-the-suid-table)
 * [Insert the first record in the new table](#insert-the-first-record-in-the-new-table)
-* [Configure a MySQL datasource](#configure-a-mysql-datasource)
+* [Configure a datasource](#configure-a-datasource)
 * [Add the jar to WEB-INF/lib](#add-the-jar-to-web-inf-lib)
 * [Add SuidRecord to persistence.xml](#add-suidrecord-to-persistence-xml)
 * [Optional: Add a servlet mapping to web.xml](#optional-add-a-servlet-mapping-to-web-xml)
 
-### Create a MySQL database and user
+### Create a database and user
 ```sql
 CREATE SCHEMA IF NOT EXISTS `suiddb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER 'username'@'hostname' IDENTIFIED BY 'password';
@@ -50,7 +50,7 @@ INSERT INTO suid(shard) VALUES(0);
 *Note*: This configures the shard ID as 0.<br> 
 *See*: [Sharding](#sharding) [Configure sharding](#configure-sharding)
 
-### Configure a MySQL datasource
+### Configure a datasource
 Using the tools for your preferred server, add a new DataSource that can connect to the database we just created. In the examples below we are configuring a MySQL database on JBoss/WildFly, but all
 database and EE vendors that support JPA2 can be used.
 
