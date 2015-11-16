@@ -33,7 +33,6 @@ CREATE SCHEMA IF NOT EXISTS `suiddb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8m
 CREATE USER 'username'@'hostname' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON `suiddb`.* TO 'username'@'hostname';
 ```
-*NOTE*: Only MySQL is supported at the moment.
 
 ### Create the suid table
 ```sql
