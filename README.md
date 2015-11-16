@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS suid (
 INSERT INTO suid(shard) VALUES(0);
 ```
 *Note*: This configures the shard ID as 0.<br> 
-*See*: [Sharding](#sharding) [Configure sharding](#configure-sharding)
+*See*: [Sharding](#sharding) | [Configure sharding](#configure-sharding)
 
 ### Configure a datasource
 Using the tools for your preferred server, add a new DataSource that can connect to the database we just created. In the examples below we are configuring a MySQL database on JBoss/WildFly, but all
