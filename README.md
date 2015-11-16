@@ -74,6 +74,7 @@ database and EE vendors that support JPA2 can be used.
         <background-validation-millis>60000</background-validation-millis>
     </validation>
 </datasource>
+```
 
 ### Add the jar to WEB-INF/lib
 If you build your webapp with Maven, add a dependency using the Maven coordinates mentioned above. Otherwise, copy `suid-server-java-0.10.0.jar` to your `WEB-INF/lib` folder.
