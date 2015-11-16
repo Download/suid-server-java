@@ -28,6 +28,8 @@ See the main [project](https://download.github.io/suid/) for details.
 * [Optional: Add a servlet mapping to web.xml](#optional-add-a-servlet-mapping-to-web-xml)
 
 ### Create a database and user
+In the examples below we are assuming a MySQL database, but any database that supports 
+JPA2 can be used.
 ```sql
 CREATE SCHEMA IF NOT EXISTS `suiddb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER 'username'@'hostname' IDENTIFIED BY 'password';
