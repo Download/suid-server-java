@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,17 +17,15 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author Stijn de Witt [StijnDeWitt@hotmail.com]
  */
+@WebServlet("/suid/suid.json")
 public class SuidServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
 	private SuidService suidService;
 
-	/**
-	 * Empty constructor, does nothing. 
-	 */
-	public SuidServlet() {
-	}
+	/** Empty constructor, does nothing. */
+	public SuidServlet() {}
 
 	/**
 	 * Handles incoming GET requests.
@@ -52,12 +51,8 @@ public class SuidServlet extends HttpServlet {
 	 */
 	private int getInt(String value, int def) {
 		int param = def;
-		try {
-			param = Integer.parseInt(value);
-		}
-		catch(NumberFormatException e) {
-			// ignore
-		}
+		try {param = Integer.parseInt(value);}
+		catch(NumberFormatException e) {/* ignore */}
 		return param;
 	}
 }

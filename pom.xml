@@ -2,13 +2,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ws.suid</groupId>
 	<artifactId>suid-server-java</artifactId>
-	<version>0.9.16</version>
+	<version>0.10.0</version>
 	<name>suid-server-java</name>
-	<description>Suid-server implementation for the Java EE technology stack.
-https://download.github.io/suid-server-java
-		
-Suids are distributed Service-Unique IDs that are short and sweet.
-https://download.github.io/suid</description>
+	<description>Suid-server implementation for the Java EE technology stack.</description>
 	<url>https://download.github.io/suid-server-java</url>
 	<scm>
 		<url>git@github.com:download/suid-server-java.git</url>
@@ -78,6 +74,15 @@ https://download.github.io/suid</description>
 			</plugin>
 		</plugins>
 	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-project-info-reports-plugin</artifactId>
+		        <version>2.8.1</version>
+			</plugin>
+		</plugins>
+	</reporting>
 	<profiles>
 		<profile> 
 			<id>release</id>

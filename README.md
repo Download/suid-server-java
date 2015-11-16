@@ -1,4 +1,4 @@
-# suid-server-java v0.9.16
+# suid-server-java v0.10.0
 Suid-server implementation for the Java EE technology stack.<br>
 http://download.github.io/suid-server-java/
 
@@ -6,16 +6,16 @@ Suids are distributed Service-Unique IDs that are short and sweet.<br>
 See the main [project](https://download.github.io/suid/) for details.
 
 ## Download
-* [suid-server-java-0.9.16.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.16/suid-server-java-0.9.16.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.16/suid-server-java-0.9.16.jar.asc))
-* [suid-server-java-0.9.16-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.16/suid-server-java-0.9.16-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.16/suid-server-java-0.9.16-sources.jar.asc))
-* [suid-server-java-0.9.16-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.16/suid-server-java-0.9.16-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.9.16/suid-server-java-0.9.16-javadoc.jar.asc))
+* [suid-server-java-0.10.0.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0.jar.asc))
+* [suid-server-java-0.10.0-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0-sources.jar.asc))
+* [suid-server-java-0.10.0-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0-javadoc.jar.asc))
 
 ## Maven coordinates:
 ```xml
 <dependency>
 	<groupId>ws.suid</groupId>
 	<artifactId>suid-server-java</artifactId>
-	<version>0.9.16</version>
+	<version>0.10.0</version>
 </dependency>
 ```
 ## Usage
@@ -24,7 +24,8 @@ See the main [project](https://download.github.io/suid/) for details.
 * [Insert the first record in the new table](#insert-the-first-record-in-the-new-table)
 * [Configure a MySQL datasource](#configure-a-mysql-datasource)
 * [Add the jar to WEB-INF/lib](#add-the-jar-to-web-inf-lib)
-* [Add a servlet definition and mapping to web.xml](#add-a-servlet-definition-and-mapping-to-web-xml)
+* [Add SuidRecord to persistence.xml](#add-suidrecord-to-persistence-xml)
+* [Optional: Add a servlet mapping to web.xml](#optional-add-a-servlet-mapping-to-web-xml)
 
 ### Create a MySQL database and user
 ```sql
@@ -37,10 +38,8 @@ GRANT ALL PRIVILEGES ON `suiddb`.* TO 'username'@'hostname';
 ### Create the suid table
 ```sql
 CREATE TABLE IF NOT EXISTS suid (
-	block BIGINT NOT NULL AUTO_INCREMENT,
-	shard TINYINT NOT NULL,
-	PRIMARY KEY (block),
-	UNIQUE KEY shard (shard)
+	block BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	shard TINYINT NOT NULL
 );
 ```
 
@@ -49,58 +48,89 @@ CREATE TABLE IF NOT EXISTS suid (
 INSERT INTO suid(shard) VALUES(0);
 ```
 *Note*: This configures the shard ID as 0.<br> 
-*See*: [Sharding](#sharding) [Using the database](#using-the-database)
+*See*: [Sharding](#sharding) [Configure sharding](#configure-sharding)
 
 ### Configure a MySQL datasource
-Using the tools for your preferred server, add a new DataSource called `SuidRWDS` that can connect to the database we just created.
-For example, using JBoss CLI it could look like this:
-	jboss-cli -c "data-source add --name=SuidRWDS --jndi-name=java:/jdbc/SuidRWDS --driver-name=mysql --connection-url=jdbc:mysql://hostname:3306/suiddb --user-name=username --password=password"
+Using the tools for your preferred server, add a new DataSource that can connect to the database we just created. In the examples below we are configuring a MySQL database on JBoss/WildFly, but all
+database and EE vendors that support JPA2 can be used.
+
+#### Using JBoss CLI
+	jboss-cli -c "data-source add --name=MyDataSource --jndi-name=java:/jdbc/MyDataSource --driver-name=mysql --connection-url=jdbc:mysql://hostname:3306/suiddb --user-name=username --password=password"
+
+#### Using standalone.xml
+```xml
+<datasource jndi-name="java:/jdbc/MyDataSource" pool-name="MyDataSource" enabled="true" use-java-context="true" use-ccm="true">
+    <connection-url>jdbc:mysql://localhost:3306/suiddb</connection-url>
+    <driver>mysql</driver>
+    <pool><flush-strategy>IdleConnections</flush-strategy></pool>
+    <security>
+        <user-name>root</user-name>
+        <password>secret</password>
+    </security>
+    <validation>
+        <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+        <background-validation>true</background-validation>
+        <background-validation-millis>60000</background-validation-millis>
+    </validation>
+</datasource>
 
 ### Add the jar to WEB-INF/lib
-Download or build the jar and add it to your web application's `WEB-INF/lib` folder.
+If you build your webapp with Maven, add a dependency using the Maven coordinates mentioned above. Otherwise, copy `suid-server-java-0.10.0.jar` to your `WEB-INF/lib` folder.
 
-### Add a servlet definition and mapping to web.xml
+### Add SuidRecord to persistence.xml
+Suid-server-java uses JPA, so make sure JPA can find it by adding the `SuidRecord` class
+to your webapp's `persistence.xml`:
 ```xml
-<servlet>
-	<description></description>
-	<display-name>SuidServlet</display-name>
-	<servlet-name>SuidServlet</servlet-name>
-	<servlet-class>ws.suid.SuidServlet</servlet-class>
-	<init-param>
-		<description>
-			Shard number to use when no shard number is in the `suid` table yet. Will
-			be ignored if there is already a record in the suid table. When supplied it
-			should be in the range from 0 .. 3.
-		</description>
-		<param-name>shard</param-name>
-		<param-value>0</param-value>
-	</init-param>
-</servlet>
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="MyPersistenceUnit">
+		<description>JPA Persistence Unit.</description>
+		<jta-data-source>jdbc/MyDataSource</jta-data-source>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<class>ws.suid.SuidRecord</class>
+	</persistence-unit>
+</persistence>
+```
+Note the `class` element. I always add `exclude-unlisted-classes` as well and set it
+to `false`, but this is not needed for suid-server-java.
+
+### Optional: Add a servlet mapping to web.xml
+Suid-server-java includes a servlet named `SuidServlet` that will register itself to listen
+for requests on url `/suid/suid.json`. If you want to map it to a different url (or otherwise override it's configuration) you can configure it in `web.xml` like you can with any other servlet. Use `servlet-name` = `ws.suid.SuidServlet` to *override* the default configuration, or a different servlet name to *augment* it.
+
+```xml
 <servlet-mapping>
-	<servlet-name>SuidServlet</servlet-name>
-	<url-pattern>/suid/suid.json</url-pattern>
+	<servlet-name>ws.suid.SuidServlet</servlet-name>
+	<url-pattern>/super-suid/suid.json</url-pattern>
 </servlet-mapping>
 ```
+In the example above we specified a matching servlet name, so this *overrides* the default configuration. SuidServlet will be listening to one url:
+* `/super-suid/suid.json` (overridden)
+
+```xml
+<servlet-mapping>
+	<servlet-name>SuperSuidServlet</servlet-name>
+	<url-pattern>/super-suid/suid.json</url-pattern>
+</servlet-mapping>
+```
+In this example we specified a different servlet name, so this *augments* the default configuration. SuidServlet will be listening to two urls:
+* `/suid/suid.json` (default) 
+* `/super-suid/suid.json` (augmented)
+
 
 ## Sharding
-To prevent a single point of failure, the total ID space for each domain is divided into 4 sections (called shards). 
-This allows you to set up separate servers with their own databases to give out ID blocks in their own shard. This way there can be up to 4 different suid servers for a single domain, each with their own database, and they don't need to communicate at all. All you need to do is make sure that each server is configured with it's own shard ID.
+To prevent a single point of failure, the total ID space for each domain is divided into 2 sections (called shards). 
+This allows you to set up separate servers with their own databases to give out ID blocks in their own shard. This way there can be two different suid servers for a single domain, each with their own database, and they don't need to communicate at all. All you need to do is make sure that each server is configured with it's own shard ID, `0` or `1`.
 
-To configure the shard id of the server, there are two options:
-1. [Using a servlet configuration parameter](#using-a-servlet-configuration-parameter)
-2. [Using the database](#using-the-database)
-
-### Using a servlet configuration parameter
-This works by setting the servlet configuration parameter `shard` to the shard ID of the server you are configuring in your webapp's `web.xml` file. Refer to the previous section for an example. <br>
-*NOTE*: This option only works if the suid table is still empty. If the suid table does not exist yet, it is created. <br>
-*SEE*: [Add a servlet definition and mapping to web.xml](#add-a-servlet-definition-and-mapping-to-web-xml)
-
-### Using the database
-The preferred way of configuring the shard ID is by just inserting the first record in the suid table manually. The shard id is used when inserting new records so once the first record is there the server can figure out the rest by itself. All the servlet configuration parameter does is tell the SuidServlet to insert this first record if it's not yet there.<br>
+### Configure sharding
+To configure the shard ID we insert the first record in the suid table manually. The shard id on the existing record is used when inserting new records so once the first record is there the server can figure out the rest by itself. If we don't insert a first record, the shard ID defaults to `0`.
 *SEE*: [Insert the first record in the new table](#insert-the-first-record-in-the-new-table)
 
 ## Copyright
-Copyright (c) 2015 by Stijn de Witt. Some rights reserved.
+Copyright (c) 2015 by [Stijn de Witt](http://StijnDeWitt.com). Some rights reserved.
 
 ## License
 Creative Commons Attribution 4.0 International (CC BY 4.0)
