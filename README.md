@@ -1,5 +1,5 @@
 # suid-server-java v0.10.0
-Suid-server implementation for the Java EE technology stack.<br>
+**Suid-server implementation for the Java EE technology stack.** 
 http://download.github.io/suid-server-java/
 
 Suids are distributed Service-Unique IDs that are short and sweet.<br>
