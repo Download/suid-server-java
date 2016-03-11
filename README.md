@@ -1,21 +1,21 @@
-# suid-server-java v0.10.0
-**Suid-server implementation for the Java EE technology stack.** 
+# suid-server-java v0.10.1
+**Suid-server implementation for the Java EE technology stack.**
 http://download.github.io/suid-server-java/
 
 Suids are distributed Service-Unique IDs that are short and sweet.<br>
 See the main [project](https://download.github.io/suid/) for details.
 
 ## Download
-* [suid-server-java-0.10.0.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0.jar.asc))
-* [suid-server-java-0.10.0-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0-sources.jar.asc))
-* [suid-server-java-0.10.0-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.0/suid-server-java-0.10.0-javadoc.jar.asc))
+* [suid-server-java-0.10.1.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.1/suid-server-java-0.10.1.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.1/suid-server-java-0.10.1.jar.asc))
+* [suid-server-java-0.10.1-sources.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.1/suid-server-java-0.10.1-sources.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.1/suid-server-java-0.10.1-sources.jar.asc))
+* [suid-server-java-0.10.1-javadoc.jar](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.1/suid-server-java-0.10.1-javadoc.jar) ([signature](http://search.maven.org/remotecontent?filepath=ws/suid/suid-server-java/0.10.1/suid-server-java-0.10.1-javadoc.jar.asc))
 
 ## Maven coordinates:
 ```xml
 <dependency>
 	<groupId>ws.suid</groupId>
 	<artifactId>suid-server-java</artifactId>
-	<version>0.10.0</version>
+	<version>0.10.1</version>
 </dependency>
 ```
 ## Usage
@@ -28,7 +28,7 @@ See the main [project](https://download.github.io/suid/) for details.
 * [Optional: Add a servlet mapping to web.xml](#optional-add-a-servlet-mapping-to-web-xml)
 
 ### Create a database and user
-In the examples below we are assuming a MySQL database, but any database that supports 
+In the examples below we are assuming a MySQL database, but any database that supports
 JPA2 can be used.
 ```sql
 CREATE SCHEMA IF NOT EXISTS `suiddb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS suid (
 ```sql
 INSERT INTO suid(shard) VALUES(0);
 ```
-*Note*: This configures the shard ID as 0.<br> 
+*Note*: This configures the shard ID as 0.<br>
 *See*: [Sharding](#sharding) | [Configure sharding](#configure-sharding)
 
 ### Configure a datasource
@@ -77,7 +77,7 @@ database and EE vendors that support JPA2 can be used.
 ```
 
 ### Add the jar to WEB-INF/lib
-If you build your webapp with Maven, add a dependency using the Maven coordinates mentioned above. Otherwise, copy `suid-server-java-0.10.0.jar` to your `WEB-INF/lib` folder.
+If you build your webapp with Maven, add a dependency using the Maven coordinates mentioned above. Otherwise, copy `suid-server-java-0.10.1.jar` to your `WEB-INF/lib` folder.
 
 ### Add SuidRecord to persistence.xml
 Suid-server-java uses JPA, so make sure JPA can find it by adding the `SuidRecord` class
@@ -119,12 +119,12 @@ In the example above we specified a matching servlet name, so this *overrides* t
 </servlet-mapping>
 ```
 In this example we specified a different servlet name, so this *augments* the default configuration. SuidServlet will be listening to two urls:
-* `/suid/suid.json` (default) 
+* `/suid/suid.json` (default)
 * `/super-suid/suid.json` (augmented)
 
 
 ## Sharding
-To prevent a single point of failure, the total ID space for each domain is divided into 2 sections (called shards). 
+To prevent a single point of failure, the total ID space for each domain is divided into 2 sections (called shards).
 This allows you to set up separate servers with their own databases to give out ID blocks in their own shard. This way there can be two different suid servers for a single domain, each with their own database, and they don't need to communicate at all. All you need to do is make sure that each server is configured with it's own shard ID, `0` or `1`.
 
 ### Configure sharding
