@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="suid")
 @NamedQueries(value={
 	@NamedQuery(name=SuidRecord.ALL, query="SELECT sr FROM SuidRecord sr"),
-	@NamedQuery(name=SuidRecord.DEL, query="DELETE FROM SuidRecord sr WHERE sr.block < :block")
+	@NamedQuery(name=SuidRecord.DEL, query="DELETE FROM SuidRecord sr WHERE sr.block = :block")
 })
 public class SuidRecord {
 	public static final String ALL = "suid_record_all";

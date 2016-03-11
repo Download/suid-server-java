@@ -65,38 +65,28 @@ public class SuidService {
 	public Suid[] nextBlocks(int count) {
 		if (count < 1) count = 1;
 		if (count > MAX_REQUEST_BLOCKS) count = MAX_REQUEST_BLOCKS;
-		int genBlock = 0;
-		Byte shard = Generator.get().shard;
-		if (shard == null) {
-			genBlock = 1;
-			Query query = em.createNamedQuery(SuidRecord.ALL, SuidRecord.class);
-			query.setFirstResult(0).setMaxResults(1);
-			List<SuidRecord> existing = (List<SuidRecord>) query.getResultList();
-			if (!existing.isEmpty()) {shard = existing.get(0).getShard();}
-			else {shard = Byte.valueOf((byte) 0);}
-		} 
-		SuidRecord[] blocks = new SuidRecord[count + genBlock];
-		for (int i=0; i<count+genBlock; i++) {
-			em.persist(blocks[i] = new SuidRecord(shard));
-		}
-		em.flush();
+		Query query = em.createNamedQuery(SuidRecord.ALL, SuidRecord.class);
+		query.setFirstResult(0).setMaxResults(1);
+		List<SuidRecord> existing = (List<SuidRecord>) query.getResultList();
+		Byte shard = existing.isEmpty() ? Byte.valueOf((byte) 0) : existing.get(0).getShard();
+		Long block = existing.isEmpty() ? Long.valueOf(0L) : existing.get(0).getBlock();
+		
+		SuidRecord[] blocks = new SuidRecord[count];
 		Suid[] results = new Suid[count];
-		for (int i=genBlock; i<count+genBlock; i++) {
+		for (int i=0; i<count; i++) {
+			if (! block.equals(Long.valueOf(0L))) {
+				query = em.createNamedQuery(SuidRecord.DEL);
+				query.setParameter("block", block);
+				query.executeUpdate();
+				em.flush();
+			}
+			
+			em.persist(blocks[i] = new SuidRecord(shard));
+			em.flush();
 			em.refresh(blocks[i]);
-			results[i-genBlock] = new Suid(blocks[i].getBlock().longValue(), (byte) 0, shard);
+			block = blocks[i].getBlock();
+			results[i] = new Suid(block.longValue(), (byte) 0, shard.byteValue());
 		}
-		if (genBlock == 1) {
-			em.refresh(blocks[0]);
-			Generator.get().block = new Suid(blocks[0].getBlock().longValue(), (byte) 0, shard);
-			Generator.get().shard = shard;
-		}
-		// Aggressively delete all suid records with lower block value than last block.
-		// We aim for just a single record in the db at any time, though multiple
-		// records may be present for short periods due to concurrency.
-		Query query = em.createNamedQuery(SuidRecord.DEL);
-		query.setParameter("block", blocks[count+genBlock-1].getBlock());
-		query.executeUpdate();
-		em.flush();
 		return results;
 	}
 
